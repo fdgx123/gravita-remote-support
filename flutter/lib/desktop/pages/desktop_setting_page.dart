@@ -2617,7 +2617,7 @@ class _AboutState extends State<_About> {
                       .marginSymmetric(vertical: 4.0)),
               InkWell(
                   onTap: () {
-                    launchUrlString('https://support.gravitatech.com/remote');
+                    launchUrlString('https://gravitatech.com/privacy/');
                   },
                   child: Text(
                     translate('Privacy Statement'),

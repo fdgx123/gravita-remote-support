@@ -233,9 +233,9 @@ class _InstallPageBodyState extends State<_InstallPageBody>
                           InkWell(
                             hoverColor: Colors.transparent,
                             onTap: () => launchUrlString(
-                                'https://support.gravitatech.com/remote'),
+                                'https://gravitatech.com/privacy/'),
                             child: Tooltip(
-                              message: 'https://support.gravitatech.com/remote',
+                              message: 'https://gravitatech.com/privacy/',
                               child: Row(children: [
                                 Icon(Icons.launch_outlined, size: 16)
                                     .marginOnly(right: 5),
