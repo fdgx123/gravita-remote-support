@@ -1,0 +1,52 @@
+# Gravita Remote Support: live session test.
+# A throwaway Windows machine installs the app from the download page and waits online as the
+# "customer", so a real remote session can be made to it through support.gravitatech.com.
+# The test password comes from the repository secret TEST_PW and never appears in the log.
+name: Gravita Remote Support - live session test
+
+on:
+  workflow_dispatch:
+    inputs:
+      msi_url:
+        description: "Installer URL on the download page"
+        required: true
+      minutes:
+        description: "Minutes to stay online"
+        default: "25"
+
+jobs:
+  customer:
+    name: Customer PC (Windows)
+    runs-on: windows-2022
+    timeout-minutes: 45
+    steps:
+      - name: Download and install from the download page
+        shell: pwsh
+        run: |
+          Invoke-WebRequest "${{ inputs.msi_url }}" -OutFile app.msi
+          (Get-FileHash app.msi -Algorithm SHA256).Hash
+          $p = Start-Process msiexec.exe -ArgumentList '/i','app.msi','/qn','/norestart','/l*v','msi.log' -Wait -PassThru
+          "msiexec exit code: $($p.ExitCode)"
+          Get-ChildItem "C:\Program Files\GravitaRemoteSupport" | Select-Object Name, Length | Format-Table | Out-String
+
+      - name: Set the test password and show the ID
+        shell: pwsh
+        env:
+          TEST_PW: ${{ secrets.TEST_PW }}
+        run: |
+          $exe = "C:\Program Files\GravitaRemoteSupport\GravitaRemoteSupport.exe"
+          Start-Sleep -Seconds 25
+          Get-Service | Where-Object Name -like '*Gravita*' | Format-Table Name, Status | Out-String
+          & $exe --password $env:TEST_PW | Out-String
+          Start-Sleep -Seconds 5
+          $id = (& $exe --get-id | Out-String).Trim()
+          "GRAVITA_TEST_ID=$id"
+
+      - name: Stay online for the session test
+        shell: pwsh
+        run: |
+          $end = (Get-Date).AddMinutes([int]"${{ inputs.minutes }}")
+          while ((Get-Date) -lt $end) {
+            "$(Get-Date -Format HH:mm:ss) online; app processes: $(@(Get-Process -Name GravitaRemoteSupport -ErrorAction SilentlyContinue).Count)"
+            Start-Sleep -Seconds 60
+          }
