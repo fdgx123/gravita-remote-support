@@ -2466,7 +2466,9 @@ pub fn create_symmetric_key_msg(their_pk_b: [u8; 32]) -> (Bytes, Bytes, secretbo
 
 #[inline]
 pub fn using_public_server() -> bool {
+    // Gravita Remote Support: the built-in server (support.gravitatech.com) is our own, not RustDesk's.
     crate::get_custom_rendezvous_server(get_option("custom-rendezvous-server")).is_empty()
+        && is_public(hbb_common::config::RENDEZVOUS_SERVERS[0])
 }
 
 pub struct ThrottledInterval {
