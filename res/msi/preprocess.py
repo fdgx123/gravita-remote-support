@@ -250,7 +250,8 @@ def gen_pre_vars(args, dist_dir):
             f'{indent}<?define Version="{g_version}" ?>\n',
             f'{indent}<?define Manufacturer="{args.manufacturer}" ?>\n',
             f'{indent}<?define Product="{args.app_name}" ?>\n',
-            f'{indent}<?define Description="{args.app_name} Installer" ?>\n',
+            f'{indent}<?define DisplayProduct="Gravita Remote Support" ?>\n',
+            f'{indent}<?define Description="Gravita Remote Support Installer" ?>\n',
             f'{indent}<?define ProductLower="{args.app_name.lower()}" ?>\n',
             f'{indent}<?define RegKeyRoot=".$(var.ProductLower)" ?>\n',
             f'{indent}<?define RegKeyInstall="$(var.RegKeyRoot)\\Install" ?>\n',
@@ -276,7 +277,7 @@ def replace_app_name_in_langs(app_name):
         with open(file_path, "r", encoding="utf-8") as f:
             lines = f.readlines()
         for i, line in enumerate(lines):
-            lines[i] = line.replace("RustDesk", app_name)
+            lines[i] = line.replace("RustDesk Tray", app_name + " Tray").replace("RustDesk", "Gravita Remote Support")
         with open(file_path, "w", encoding="utf-8") as f:
             f.writelines(lines)
 
@@ -498,8 +499,8 @@ def init_global_vars(dist_dir, app_name, args):
 
 
 def update_license_file(app_name):
-    if app_name == "RustDesk":
-        return
+    # Gravita Remote Support: keep the original licence text and copyright notice (AGPL-3.0).
+    return
     license_file = Path(sys.argv[0]).parent.joinpath("Package/License.rtf")
     with open(license_file, "r", encoding="utf-8") as f:
         license_content = f.read()

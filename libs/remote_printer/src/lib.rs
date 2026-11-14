@@ -11,7 +11,8 @@ const RD_DRIVER_INF_PATH: &str = "drivers/RustDeskPrinterDriver/RustDeskPrinterD
 
 #[cfg(target_os = "windows")]
 fn get_printer_name(app_name: &str) -> Vec<u16> {
-    format!("{} Printer", app_name)
+    let _ = app_name;
+    format!("{} Printer", hbb_common::config::DISPLAY_APP_NAME)
         .encode_utf16()
         .chain(Some(0))
         .collect()
@@ -27,7 +28,8 @@ fn get_driver_name() -> Vec<u16> {
 
 #[cfg(target_os = "windows")]
 fn get_port_name(app_name: &str) -> Vec<u16> {
-    format!("{} Printer", app_name)
+    let _ = app_name;
+    format!("{} Printer", hbb_common::config::DISPLAY_APP_NAME)
         .encode_utf16()
         .chain(Some(0))
         .collect()
