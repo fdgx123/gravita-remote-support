@@ -1,3 +1,25 @@
+# Gravita Remote Support
+
+Gravita Remote Support is the remote support app of PT Gravita Imandaya Teknovera (Gravita Technology).
+Download: https://support.gravitatech.com/remote/
+
+It is a **modified version of [RustDesk](https://github.com/rustdesk/rustdesk) 1.5.3**, released under the
+same licence, the GNU Affero General Public License v3.0 (see `LICENCE`). RustDesk is copyright
+Purslane Tech Pte. Ltd. and its contributors.
+
+Changes made by Gravita Technology (November 2026), each a separate commit in this repository:
+- Name shown as "Gravita Remote Support"; program name GravitaRemoteSupport.
+- Built-in server support.gravitatech.com with Gravita's own server key.
+- App links point to support.gravitatech.com and the Gravita privacy notice.
+- Gravita icon and logo.
+- The built-in Gravita server is not treated as RustDesk's public server.
+- RustDesk's slogan removed from the About page; RustDesk's copyright notice kept.
+- Windows build workflow (`.github/workflows/gravita-windows.yml`).
+
+"RustDesk" is a name of Purslane Tech Pte. Ltd.; this project is not affiliated with or endorsed by them.
+
+---
+
 <p align="center">
   <img src="res/logo-header.svg" alt="RustDesk - Your remote desktop"><br>
   <a href="#raw-steps-to-build">Build</a> •
